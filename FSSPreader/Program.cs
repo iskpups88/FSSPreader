@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FSSPreader
 {
@@ -14,7 +9,7 @@ namespace FSSPreader
         {
             List<Row> rows = new List<Row>();
 
-            using (var reader = new StreamReader(@"C:\Users\i.khakimzhanov\Desktop\Выгрузка\Дети ФССП_РТ1.csv"))
+            using (var reader = new StreamReader(@"C:\Users\i.khakimzhanov\Desktop\Дети УФССП по РТ 04032019.csv"))
             {
                 while (!reader.EndOfStream)
                 {
@@ -22,26 +17,12 @@ namespace FSSPreader
                     var values = line.Split('|');
                     Row current = new Row
                     {
-                        FullName = values[0],
-                        OSP = values[1],
-                        BirthDate = Convert.ToDateTime(values[2]),
-                        BirthPlace = values[3],
-                        Address = values[4],
-
-                        DebtorFullName = values[5],
-                        DebtorBirthDate = string.IsNullOrWhiteSpace(values[6]) ? new DateTime(1000, 1, 1) : DateTime.ParseExact(values[6], "yyyy-MM-dd", CultureInfo.InvariantCulture),
-                        DebtorAddress = values[7],
-
-                        СlaimantFullName = values[8],
-                        ClaimantBirthDate = string.IsNullOrWhiteSpace(values[9]) ? new DateTime(1000, 1, 1) : DateTime.ParseExact(values[9], "yyyy-MM-dd", CultureInfo.InvariantCulture),
-                        СlaimanAddress = values[10],
-                        //IpId = decimal.Parse(values[11], CultureInfo.InvariantCulture),
-                        //IpNumber = decimal.Parse(values[12], CultureInfo.InvariantCulture),
-                        IpStatus = values[13]
-                    };                    
-                    using (StreamWriter file = new StreamWriter(@"C:\Users\i.khakimzhanov\Desktop\Выгрузка\Ready.csv", true))
+                        FullName = values[1]
+                    };
+                    string str = $@"{values[0]}|{current.ToString()}{values[2]}|{values[3]}|{values[4]}|{values[5]}|{values[6]}|{values[7]}|";
+                    using (StreamWriter file = new StreamWriter(@"C:\Users\i.khakimzhanov\Desktop\NewReady.csv", true))
                     {
-                        file.WriteLine(current.ToString());
+                        file.WriteLine(str);
                     }
                 }
             }
